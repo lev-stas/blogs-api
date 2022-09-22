@@ -1,5 +1,5 @@
 import {idGenerator} from "../utils/utils";
-import it from "node:test";
+
 let blogs: { id: string, name: string, youtubeUrl: string }[] = [
     {
     id: "vhr8teo7krl",
@@ -41,5 +41,18 @@ export const blogsRepository = {
         blogs = blogs.filter(item => item.id !== id)
         return true
 
+    },
+    updateBlogById(id: string, name: string, youtubeUrl: string){
+        const currentBlog = blogs.find(item => item.id === id)
+        if (!currentBlog){
+            return false
+        }
+        currentBlog.name = name
+        currentBlog.youtubeUrl = youtubeUrl
+        return true
+    },
+    deleteAllBlogs(){
+        blogs = []
+        return blogs
     }
 }

@@ -4,7 +4,7 @@ import {validationResult} from "express-validator";
 export const validationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        let errorMessage : {errorMessages: Array<object>} = {
+        let errorMessage : {errorMessages: { message: string, field: string }[]} = {
             errorMessages:[]
         }
         errors.array({onlyFirstError: true}).forEach(item => {
@@ -14,8 +14,12 @@ export const validationMiddleware = (req: Request, res: Response, next: NextFunc
             }
             errorMessage.errorMessages.push(error)
         })
-        res.status(400).json(errorMessage)
-        return
+        if(errorMessage.errorMessages.find(item => item.message === 'Unauthorized')) {
+            res.send(401)
+        } else {
+            res.status(400).json(errorMessage)
+        }
+        return;
     }
     next()
 }

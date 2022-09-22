@@ -1,6 +1,8 @@
 import express, {Response, Request} from "express";
 import bodyParser from "body-parser";
 import {blogsRouter} from "./routers/h02/blogsRouter";
+import {postsRouter} from "./routers/h02/postsRouter";
+import {testingRoute} from "./routers/h02/testing";
 
 const app = express();
 const parser = bodyParser();
@@ -14,7 +16,8 @@ app.get ('/', (req:Request, res:Response) => {
 })
 
 app.use('/blogs', blogsRouter)
-
+app.use('/posts', postsRouter)
+app.use('/testing', testingRoute)
 
 app.listen(port, () => {
     console.log(('Blogs App is running on port ${port}'))
