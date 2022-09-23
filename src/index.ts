@@ -19,7 +19,7 @@ app.get ('/', (req:Request, res:Response) => {
 
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
-//app.use('/testing/all-data', testingRoute)
+app.use('/testing/all-data', testingRoute)
 // app.delete('/testing/all-data', (req: Request, res:Response) => {
 //     blogsRepository.deleteAllBlogs()
 //     postsRepositories.deleteAllPosts()
