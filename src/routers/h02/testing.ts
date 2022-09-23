@@ -4,7 +4,7 @@ import {postsRepositories} from "../../repositories/postsRepository";
 
 export const testingRoute = Router()
 
-testingRoute.delete('/all-data', (req: Request, res:Response) => {
+testingRoute.delete('/', (req: Request, res:Response) => {
     blogsRepository.deleteAllBlogs()
     postsRepositories.deleteAllPosts()
     res.send(204)
