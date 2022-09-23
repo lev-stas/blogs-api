@@ -1,6 +1,7 @@
 import {body, CustomValidator, header} from "express-validator";
 import {validationMiddleware} from "./validationMiddleware";
-import {posts} from "../repositories/postsRepository";
+import {blogs} from "../repositories/blogsRepository";
+
 
 
 
@@ -9,7 +10,7 @@ function stringValidator(field: string, maxLength: number) {
 }
 
 const isValidBlogId: CustomValidator = (value) => {
-    const currentBlog = posts.find(item => item.blogId === value)
+    const currentBlog = blogs.find(item => item.id === value)
     if (!currentBlog) {
         return false
     }

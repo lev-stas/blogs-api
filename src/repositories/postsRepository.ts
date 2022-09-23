@@ -13,16 +13,16 @@ export let posts:{
         title: 'My First Post',
         shortDescription: 'This is my very first post where I want to tell you some',
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        blogId: '6u2gxgh3cf',
-        blogName: 'Samurai Blog'
+        blogId: 'vhr8teo7krl',
+        blogName: 'it-kamasutra'
     },
     {
         id: 'xbks98uk41',
         title: 'The second of My Posts',
         shortDescription: 'This is the second post where I try to explain something',
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        blogId: 'aepyer7njyc',
-        blogName: 'Shogun Blog'
+        blogId: 'avwdee4j65w',
+        blogName: 'digitalize'
     }
 ]
 

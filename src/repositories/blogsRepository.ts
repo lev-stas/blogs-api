@@ -1,6 +1,6 @@
 import {idGenerator} from "../utils/utils";
 
-let blogs: { id: string, name: string, youtubeUrl: string }[] = [
+export let blogs: { id: string, name: string, youtubeUrl: string }[] = [
     {
     id: "vhr8teo7krl",
     name: "it-kamasutra",
