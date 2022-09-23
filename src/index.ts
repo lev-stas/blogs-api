@@ -19,12 +19,12 @@ app.get ('/', (req:Request, res:Response) => {
 
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
-//app.use('/testing', testingRoute)
-app.delete('/testing/all-data', (req: Request, res:Response) => {
-    blogsRepository.deleteAllBlogs()
-    postsRepositories.deleteAllPosts()
-    res.send(204)
-})
+app.use('/testing/all-data', testingRoute)
+// app.delete('/testing/all-data', (req: Request, res:Response) => {
+//     blogsRepository.deleteAllBlogs()
+//     postsRepositories.deleteAllPosts()
+//     res.send(204)
+// })
 
 app.listen(port, () => {
     console.log(('Blogs App is running on port ${port}'))
