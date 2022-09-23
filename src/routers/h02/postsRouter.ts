@@ -11,7 +11,7 @@ postsRouter.get('/', (req: Request, res:Response)=>{
 
 postsRouter.get('/:id', (req: Request, res: Response) => {
     const currentPost = postsRepositories.getPost(req.params.id)
-    if (currentPost){
+    if (!currentPost){
         res.send(400)
         return
     }
