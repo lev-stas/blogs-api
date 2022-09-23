@@ -1,4 +1,5 @@
 import {idGenerator} from "../utils/utils";
+import {blogs} from "./blogsRepository";
 
 export let posts:{
     id:string,
@@ -51,7 +52,7 @@ export const postsRepositories = {
         content: string,
         blogId: string
     ){
-        const currentBlog = posts.find(item => item.blogId === blogId)
+        const currentBlog = blogs.find(item => item.id === blogId)
         const newPost:{
             id: string,
             title: string,
@@ -64,8 +65,8 @@ export const postsRepositories = {
             title: title,
             shortDescription: shortDescription,
             content: content,
-            blogId: blogId,
-            blogName: currentBlog!.blogName
+            blogId: currentBlog!.id,
+            blogName: currentBlog!.name
         }
         posts.push(newPost)
         return newPost
