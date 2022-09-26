@@ -1,6 +1,6 @@
 import {Router, Request, Response} from "express";
 import {postsRepositories} from "../../repositories/postsRepository";
-import {postsChangeValidation} from "../../middlewares/validation";
+import {authValidation, postsChangeValidation} from "../../middlewares/validation";
 
 export const postsRouter = Router()
 
@@ -18,7 +18,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     res.send(currentPost)
 })
 
-postsRouter.delete('/:id', (req: Request, res: Response) => {
+postsRouter.delete('/:id', authValidation, (req: Request, res: Response) => {
     const deletedPost = postsRepositories.deletePost(req.params.id)
     if (!deletedPost){
         res.send(404)
