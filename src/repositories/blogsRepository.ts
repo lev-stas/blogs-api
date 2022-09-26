@@ -1,4 +1,5 @@
 import {idGenerator} from "../utils/utils";
+import {posts} from "./postsRepository";
 
 export let blogs: { id: string, name: string, youtubeUrl: string }[] = [
     {
@@ -49,6 +50,7 @@ export const blogsRepository = {
         }
         currentBlog.name = name
         currentBlog.youtubeUrl = youtubeUrl
+        posts.filter(item => item.blogId === id).map(item => item.blogName = name)
         return true
     },
     deleteAllBlogs(){
