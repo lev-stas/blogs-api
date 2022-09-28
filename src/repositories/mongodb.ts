@@ -2,7 +2,7 @@ import {MongoClient} from 'mongodb'
 import {BlogsType} from "./blogsRepository";
 import {PostsType} from "./postsRepository";
 
-const mongoUrl = process.env.mongoURI || 'mongodb+srv://mongoadmin:a7E$pZk8jMeDo!@cluster0.nzqnnli.mongodb.net/?retryWrites=true&w=majority'
+const mongoUrl = process.env.mongoURI
 
 export const mongoClient = new MongoClient(mongoUrl);
 const db = mongoClient.db('BlogsAPI');
