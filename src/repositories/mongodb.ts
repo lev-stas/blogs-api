@@ -2,9 +2,8 @@ import {MongoClient} from 'mongodb'
 import {BlogsType} from "./blogsRepository";
 import {PostsType} from "./postsRepository";
 
-const mongoUrl = process.env.mongoURI
-
-export const mongoClient = new MongoClient(mongoUrl);
+const mongoUrl: string | undefined = process.env.mongoURI;
+export const mongoClient = new MongoClient(mongoUrl!);
 const db = mongoClient.db('BlogsAPI');
 export const blogsCollection = db.collection<BlogsType>('blogscollection');
 export const postsCollection = db.collection<PostsType>('postscollection')
