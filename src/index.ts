@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import express, {Response, Request} from "express";
 import bodyParser from "body-parser";
 import {blogsRouter} from "./routers/blogsRouter";
@@ -7,7 +9,7 @@ import {runMongoDB} from "./repositories/mongodb";
 
 const app = express();
 const parser = bodyParser();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const welcomeMessage:string = 'It Would Be Great to Get a Welcome Drink Here!';
 
 app.use(parser)

@@ -1,6 +1,6 @@
 import {body, CustomValidator, header} from "express-validator";
 import {validationMiddleware} from "./validationMiddleware";
-import {blogsRepository} from "../repositories/blogsRepository";
+import {blogsRepository, BlogsType} from "../repositories/blogsRepository";
 
 
 function stringValidator(field: string, maxLength: number) {
@@ -8,9 +8,9 @@ function stringValidator(field: string, maxLength: number) {
 }
 
 const isValidBlogId: CustomValidator = async (value) => {
-    const currentBlog = blogsRepository.getBlogById(value)
+    const currentBlog = await blogsRepository.getBlogById(value)
     if (!currentBlog) {
-        return false
+        throw new Error ('blog is not found')
     }
     return true
 }

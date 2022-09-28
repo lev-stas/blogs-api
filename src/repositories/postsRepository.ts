@@ -1,5 +1,5 @@
 import {idGenerator} from "../utils/utils";
-import {mongoClient, postsCollection} from "./mongodb";
+import {postsCollection} from "./mongodb";
 import {blogsRepository} from "./blogsRepository";
 
 export type PostsType={
@@ -14,10 +14,10 @@ export type PostsType={
 
 export const postsRepositories = {
     async getAllPosts (): Promise<PostsType[]>{
-        return await postsCollection.find({}).toArray()
+        return await postsCollection.find({}, {projection:{_id: 0}}).toArray()
     },
     async getPost(id:string):Promise<PostsType | null>{
-        const post: PostsType | null = await postsCollection.findOne({id: id})
+        const post: PostsType | null = await postsCollection.findOne({id: id}, {projection:{_id: 0}})
         if (!post){
             return null
         }

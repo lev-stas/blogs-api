@@ -11,10 +11,10 @@ export type BlogsType ={
 
 export const blogsRepository = {
     async getBlogList():Promise<BlogsType[]>{
-        return blogsCollection.find({}).toArray()
+        return await blogsCollection.find({}, {projection:{_id: 0}}).toArray()
     },
     async getBlogById(id:string):Promise<BlogsType | null>{
-        let blog: BlogsType | null = await blogsCollection.findOne({id: id})
+        let blog: BlogsType | null = await blogsCollection.findOne({id: id}, {projection:{_id: 0}})
         if (!blog){
             return null
         }
