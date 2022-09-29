@@ -32,7 +32,7 @@ export const postsRepositories = {
         shortDescription: string,
         content: string,
         blogId: string
-    ): Promise<PostsType>{
+    ): Promise<PostsType | null>{
         const blog = await blogsRepository.getBlogById(blogId)
         const newPost: PostsType = {
             id: idGenerator(),
@@ -44,7 +44,7 @@ export const postsRepositories = {
             createdAt: new Date().toISOString()
         }
         const result = await postsCollection.insertOne(newPost)
-        return newPost
+        return await this.getPost(newPost.id)
     },
     async changePost(
         id: string,
