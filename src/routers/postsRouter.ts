@@ -23,6 +23,7 @@ postsRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Re
     const deletedPost = await postsRepositories.deletePost(req.params.id)
     if (!deletedPost){
         res.send(404)
+        return
     }
     res.send(204)
 })
