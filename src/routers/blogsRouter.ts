@@ -1,14 +1,18 @@
 import {Request, Response, Router} from "express";
 import {blogsRepository} from "../repositories/blogsRepository";
+import {createBlog} from "../domain/blogsDomain";
 import { blogsChangeValidation, blogsPutValidation} from "../middlewares/validation";
-import {BlogsType} from "../repositories/blogsRepository";
 import {authValidatorMiddleware} from "../middlewares/authValidationMiddleware";
+import {queryProcessing} from "../utils/queryProcessing";
+import {blogsQueryRepository} from "../repositories/blogsQueryRepository";
+import {BlogsType} from "../types/types";
 export const blogsRouter = Router();
 
 
 
 blogsRouter.get ('/', async (req:Request, res:Response) =>{
-    const blogsList:BlogsType[] = await blogsRepository.getBlogList()
+    const queryParams = queryProcessing(req)
+    const blogsList = await blogsQueryRepository.getAllBlogs(queryParams)
     res.send(blogsList)
 })
 
@@ -22,8 +26,8 @@ blogsRouter.get('/:id', async (req:Request, res:Response) => {
 })
 
 blogsRouter.post('/',authValidatorMiddleware, blogsChangeValidation, async (req: Request, res: Response) => {
-    const newBlog = await blogsRepository.addBlog(req.body.name, req.body.youtubeUrl)
-    res.status(201).send(newBlog)
+    const newBlog : BlogsType | null = await createBlog(req.body.name, req.body.youtubeUrl)
+    newBlog ? res.status(201).send(newBlog) : res.status(500).send('Failed to add new blog')
 })
 blogsRouter.delete('/:id',authValidatorMiddleware, async (req: Request, res:Response) => {
     const deletedBlog = await blogsRepository.deleteBlogById(req.params.id)

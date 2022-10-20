@@ -20,15 +20,9 @@ export const blogsRepository = {
         }
         return blog
     },
-     async addBlog(name: string, youtubeUrl: string):Promise<BlogsType | null> {
-        const newBlog = {
-            id: idGenerator(),
-            name: name,
-            youtubeUrl: youtubeUrl,
-            createdAt: new Date().toISOString()
-        };
-        await blogsCollection.insertOne(newBlog)
-        return await this.getBlogById(newBlog.id)
+     async addBlog(newBlog: BlogsType):Promise<bulean> {
+        const result = await blogsCollection.insertOne(newBlog)
+        return result.acknowledged
     },
     async deleteBlogById(id:string): Promise<boolean>{
         const result = await blogsCollection.deleteOne({id:id})
