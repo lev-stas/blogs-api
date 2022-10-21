@@ -20,7 +20,7 @@ export const blogsRepository = {
         }
         return blog
     },
-     async addBlog(newBlog: BlogsType):Promise<bulean> {
+     async addBlog(newBlog: BlogsType):Promise<boolean> {
         const result = await blogsCollection.insertOne(newBlog)
         return result.acknowledged
     },
@@ -39,5 +39,10 @@ export const blogsRepository = {
     async deleteAllBlogs(): Promise<boolean>{
         const result = await blogsCollection.deleteMany({})
         return result.deletedCount > 0
+    },
+
+    async getBlogName(blogId:string): Promise<string>{
+        const blogName = await blogsCollection.findOne({id: blogId}, {projection:{name: 1, _id: 0}})
+        return blogName!.name
     }
 }

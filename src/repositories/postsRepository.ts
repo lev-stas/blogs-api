@@ -28,23 +28,10 @@ export const postsRepositories = {
         return result.deletedCount === 1
     },
     async addPost(
-        title: string,
-        shortDescription: string,
-        content: string,
-        blogId: string
-    ): Promise<PostsType | null>{
-        const blog = await blogsRepository.getBlogById(blogId)
-        const newPost: PostsType = {
-            id: idGenerator(),
-            title: title,
-            shortDescription: shortDescription,
-            content: content,
-            blogId: blog!.id,
-            blogName: blog!.name,
-            createdAt: new Date().toISOString()
-        }
+        newPost:PostsType
+    ): Promise<boolean>{
         const result = await postsCollection.insertOne(newPost)
-        return await this.getPost(newPost.id)
+        return result.acknowledged
     },
     async changePost(
         id: string,

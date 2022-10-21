@@ -1,12 +1,16 @@
 import {Router, Request, Response} from "express";
 import {postsRepositories} from "../repositories/postsRepository";
+import {getAllPosts} from "../repositories/postsQueryRepository";
 import {postsChangeValidation} from "../middlewares/validation";
 import {authValidatorMiddleware} from "../middlewares/authValidationMiddleware";
+import {queryProcessing} from "../utils/queryProcessing";
+import {createPost} from "../domain/postsDomain";
 
 export const postsRouter = Router()
 
 postsRouter.get('/', async (req: Request, res:Response)=>{
-    const posts = await postsRepositories.getAllPosts()
+    const queryParams = queryProcessing(req)
+    const posts = await getAllPosts(queryParams)
     res.send(posts)
 })
 
@@ -30,7 +34,7 @@ postsRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Re
 
 postsRouter.post('/', authValidatorMiddleware, postsChangeValidation, async (req: Request, res: Response) => {
     const {title, shortDescription, content, blogId} = req.body
-    const newPost = await postsRepositories.addPost(title, shortDescription, content, blogId)
+    const newPost = await createPost(req.body.blogId, req.body.title, req.body.shortDescription, req.body.content)
     res.status(201).send(newPost)
 })
 
