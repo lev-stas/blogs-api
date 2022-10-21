@@ -1,4 +1,3 @@
-import {idGenerator} from "../utils/utils";
 import {blogsCollection, mongoClient} from "./mongodb";
 
 export type BlogsType ={
@@ -20,15 +19,9 @@ export const blogsRepository = {
         }
         return blog
     },
-     async addBlog(name: string, youtubeUrl: string):Promise<BlogsType | null> {
-        const newBlog = {
-            id: idGenerator(),
-            name: name,
-            youtubeUrl: youtubeUrl,
-            createdAt: new Date().toISOString()
-        };
-        await blogsCollection.insertOne(newBlog)
-        return await this.getBlogById(newBlog.id)
+     async addBlog(newBlog: BlogsType):Promise<boolean> {
+        const result = await blogsCollection.insertOne(newBlog)
+        return result.acknowledged
     },
     async deleteBlogById(id:string): Promise<boolean>{
         const result = await blogsCollection.deleteOne({id:id})
@@ -45,5 +38,10 @@ export const blogsRepository = {
     async deleteAllBlogs(): Promise<boolean>{
         const result = await blogsCollection.deleteMany({})
         return result.deletedCount > 0
+    },
+
+    async getBlogName(blogId:string): Promise<string>{
+        const blogName = await blogsCollection.findOne({id: blogId}, {projection:{name: 1, _id: 0}})
+        return blogName!.name
     }
 }

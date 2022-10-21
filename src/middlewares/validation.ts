@@ -1,4 +1,4 @@
-import {body, CustomValidator, header} from "express-validator";
+import {body, CustomValidator, param} from "express-validator";
 import {validationMiddleware} from "./validationMiddleware";
 import {blogsRepository, BlogsType} from "../repositories/blogsRepository";
 
@@ -38,4 +38,13 @@ export const postsChangeValidation = [
     blogIdValidator,
     validationMiddleware
 ]
+
+export const postsInBlogsValidation = [
+    stringValidator('title', 30),
+    stringValidator('shortDescription', 100),
+    stringValidator('content', 1000),
+    validationMiddleware
+]
+
+
 
