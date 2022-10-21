@@ -1,5 +1,4 @@
 import {idGenerator} from "../utils/utils";
-import {PostType} from "../types/types";
 import {blogsRepository} from "../repositories/blogsRepository";
 import {postsRepositories} from "../repositories/postsRepository";
 

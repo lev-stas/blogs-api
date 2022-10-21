@@ -1,5 +1,4 @@
-import {PostType, QueryParams} from "../types/types";
-import {idGenerator} from "../utils/utils";
+import { QueryParams } from "../types/types";
 import {postsCollection} from "./mongodb";
 
 export async function getAllPosts (queryParams:QueryParams){

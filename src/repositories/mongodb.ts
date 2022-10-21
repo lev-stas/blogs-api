@@ -1,5 +1,3 @@
-// import * as dotenv from 'dotenv';
-// dotenv.config();
 import {MongoClient} from 'mongodb'
 import {BlogsType} from "./blogsRepository";
 import {PostsType} from "./postsRepository";

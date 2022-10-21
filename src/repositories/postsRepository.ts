@@ -1,6 +1,5 @@
-import {idGenerator} from "../utils/utils";
 import {postsCollection} from "./mongodb";
-import {blogsRepository} from "./blogsRepository";
+
 
 export type PostsType={
     id:string,

@@ -1,4 +1,3 @@
-import {idGenerator} from "../utils/utils";
 import {blogsCollection} from "./mongodb";
 import {QueryParams} from "../types/types";
 

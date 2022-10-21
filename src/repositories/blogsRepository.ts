@@ -1,4 +1,3 @@
-import {idGenerator} from "../utils/utils";
 import {blogsCollection, mongoClient} from "./mongodb";
 
 export type BlogsType ={
