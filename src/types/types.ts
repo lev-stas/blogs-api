@@ -3,7 +3,7 @@ export type QueryParams = {
     pageNumber?: number,
     pageSize?: number,
     sortBy?: string,
-    sortDirection?: number
+    sortDirection?: -1 | 1
 }
 
 export type BlogsType = {
