@@ -19,7 +19,7 @@ export async function getAllPosts (queryParams:QueryParams){
 }
 
 export async function getPostsOfCurrentBlog (queryParams: QueryParams, blogId:string){
-    const totalPosts = await postsCollection.countDocuments()
+    const totalPosts = await postsCollection.countDocuments({blogId: blogId})
     const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
     const posts = await postsCollection.find({blogId: blogId}, {projection:{_id: 0}})
         .sort({[queryParams.sortBy!]: queryParams.sortDirection!})
