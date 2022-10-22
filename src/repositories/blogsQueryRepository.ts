@@ -1,10 +1,9 @@
 import {blogsCollection} from "./mongodb";
 import {QueryParams} from "../types/types";
+import {blogsRepository} from "./blogsRepository";
 
 export const blogsQueryRepository = {
     async getAllBlogs(queryParams:QueryParams){
-
-        const totalBlogs = await blogsCollection.countDocuments()
         const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
         const blogs = await blogsCollection
             .find(
@@ -15,6 +14,7 @@ export const blogsQueryRepository = {
             .skip(skipNumber)
             .limit(queryParams.pageSize!)
             .toArray()
+        const totalBlogs = blogs.length
         return {
             pagesCount: Math.ceil(totalBlogs / queryParams.pageSize!),
             page: queryParams.pageNumber,
