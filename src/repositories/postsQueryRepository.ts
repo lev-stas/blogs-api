@@ -2,13 +2,13 @@ import { QueryParams } from "../types/types";
 import {postsCollection} from "./mongodb";
 
 export async function getAllPosts (queryParams:QueryParams){
+    const totalPosts = await postsCollection.countDocuments()
     const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
     const posts = await postsCollection.find({}, {projection:{_id: 0}})
         .sort({[queryParams.sortBy!]: queryParams.sortDirection!})
         .skip(skipNumber)
         .limit(queryParams.pageSize!)
         .toArray()
-    const totalPosts = posts.length
     return{
         pagesCount: Math.ceil(totalPosts / queryParams.pageSize!),
         page: queryParams.pageNumber,
