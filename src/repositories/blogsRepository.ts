@@ -40,8 +40,8 @@ export const blogsRepository = {
         return result.deletedCount > 0
     },
 
-    async getBlogName(blogId:string): Promise<string>{
+    async getBlogName(blogId:string): Promise<string | null>{
         const blogName = await blogsCollection.findOne({id: blogId}, {projection:{name: 1, _id: 0}})
-        return blogName!.name
+        return blogName ? blogName.name : null
     }
 }

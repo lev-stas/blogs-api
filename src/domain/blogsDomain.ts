@@ -9,7 +9,6 @@ export async function createBlog (name: string, youtubeUrl:string): Promise<Blog
         youtubeUrl: youtubeUrl,
         createdAt: new Date().toISOString()
     }
-    const addingResult = await blogsRepository.addBlog(newBlog)
-    return addingResult ? newBlog : null
-
+    const result = await blogsRepository.addBlog(newBlog)
+    return result ? await blogsRepository.getBlogById(newBlog.id) : null
 }
