@@ -26,11 +26,12 @@ export async function getPostsOfCurrentBlog (queryParams: QueryParams, blogId:st
         .skip(skipNumber)
         .limit(queryParams.pageSize!)
         .toArray()
-    return{
+    return posts.length ? {
         pagesCount: Math.ceil(totalPosts / queryParams.pageSize!),
         page: queryParams.pageNumber,
         pageSize: queryParams.pageSize,
         totalCount: totalPosts,
         items: posts
     }
+    : null
 }

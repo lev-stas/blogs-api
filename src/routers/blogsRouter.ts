@@ -30,7 +30,7 @@ blogsRouter.get('/:id', async (req:Request, res:Response) => {
 blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
     const queryParams = queryProcessing(req)
     const posts = await getPostsOfCurrentBlog(queryParams, req.params.id)
-    res.send(posts)
+    posts ? res.send(posts) : res.send(404)
 })
 
 blogsRouter.post('/',authValidatorMiddleware, blogsChangeValidation, async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ blogsRouter.post('/:id/posts', authValidatorMiddleware, postsInBlogsValidation, 
         res.send(404)
         return
     }
-    res.send(newPost)
+    res.status(201).send(newPost)
 })
 
 blogsRouter.delete('/:id',authValidatorMiddleware, async (req: Request, res:Response) => {
