@@ -3,7 +3,7 @@ import {QueryParams} from "../types/types";
 
 export const blogsQueryRepository = {
     async getAllBlogs(queryParams:QueryParams){
-        const totalBlogs = await blogsCollection.countDocuments()
+        const totalBlogs = await blogsCollection.countDocuments({name: {$regex: queryParams.searchNameTerm, $options: 'i'}})
         const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
         const blogs = await blogsCollection
             .find(
