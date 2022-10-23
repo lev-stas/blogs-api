@@ -19,7 +19,7 @@ export async function getUsers(
                 {login: {$regex: searchLoginTerm, $options: 'i'}},
                 {email: {$regex: searchEmailTerm, $options: 'i'}}
             ]},
-        {projection: {_id: 0, passHash:0}}
+        {projection: {_id: 0, salt:0,  passHash:0}}
     )
         .sort({[sortBy]: sortDirection})
         .skip(skipNumber)
