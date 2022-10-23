@@ -3,7 +3,7 @@ import {UsersType} from "../types/types";
 
 export const usersRepository = {
     async getUserById (id: string){
-        const user = await usersCollection.findOne({id: id},{projection:{_id:0, passHash:0}})
+        const user = await usersCollection.findOne({id: id},{projection:{_id:0, salt:0, passHash:0}})
         if (!user){
             return null
         }
