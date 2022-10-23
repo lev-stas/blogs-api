@@ -1,35 +1,37 @@
-import { QueryParams } from "../types/types";
 import {postsCollection} from "./mongodb";
 
-export async function getAllPosts (queryParams:QueryParams){
+export async function getAllPosts(pageNumber: number, pageSize: number, sortBy: string, sortDirection: -1 | 1){
     const totalPosts = await postsCollection.countDocuments()
-    const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
+    const skipNumber = pageNumber < 2 ? 0 : (pageNumber - 1) * pageSize
     const posts = await postsCollection.find({}, {projection:{_id: 0}})
-        .sort({[queryParams.sortBy!]: queryParams.sortDirection!})
+        .sort({[sortBy]: sortDirection})
         .skip(skipNumber)
-        .limit(queryParams.pageSize!)
+        .limit(pageSize)
         .toArray()
+    if (!posts){
+        return null
+    }
     return{
-        pagesCount: Math.ceil(totalPosts / queryParams.pageSize!),
-        page: queryParams.pageNumber,
-        pageSize: queryParams.pageSize,
+        pagesCount: Math.ceil(totalPosts / pageSize),
+        page: pageNumber,
+        pageSize: pageSize,
         totalCount: totalPosts,
         items: posts
     }
 }
 
-export async function getPostsOfCurrentBlog (queryParams: QueryParams, blogId:string){
+export async function getPostsOfCurrentBlog (pageNumber:number, pageSize:number, sortBy:string, sortDirection: 1 | -1, blogId:string){
     const totalPosts = await postsCollection.countDocuments({blogId: blogId})
-    const skipNumber = queryParams.pageNumber! < 2 ? 0 : (queryParams.pageNumber! - 1) * queryParams.pageSize!
+    const skipNumber = pageNumber < 2 ? 0 : (pageNumber - 1) * pageSize
     const posts = await postsCollection.find({blogId: blogId}, {projection:{_id: 0}})
-        .sort({[queryParams.sortBy!]: queryParams.sortDirection!})
+        .sort({[sortBy]: sortDirection})
         .skip(skipNumber)
-        .limit(queryParams.pageSize!)
+        .limit(pageSize)
         .toArray()
     return posts.length ? {
-        pagesCount: Math.ceil(totalPosts / queryParams.pageSize!),
-        page: queryParams.pageNumber,
-        pageSize: queryParams.pageSize,
+        pagesCount: Math.ceil(totalPosts / pageSize),
+        page: pageNumber,
+        pageSize: pageSize,
         totalCount: totalPosts,
         items: posts
     }

@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {blogsRepository} from "../repositories/blogsRepository";
 import {createBlog} from "../domain/blogsDomain";
-import {blogsChangeValidation, blogsPutValidation, postsInBlogsValidation} from "../middlewares/validation";
+import {blogsChangeValidation, postsInBlogsValidation} from "../middlewares/validation";
 import {authValidatorMiddleware} from "../middlewares/authValidationMiddleware";
 import {queryProcessing} from "../utils/queryProcessing";
 import {blogsQueryRepository} from "../repositories/blogsQueryRepository";
@@ -13,8 +13,8 @@ export const blogsRouter = Router();
 
 
 blogsRouter.get ('/', async (req:Request, res:Response) =>{
-    const queryParams = queryProcessing(req)
-    const blogsList = await blogsQueryRepository.getAllBlogs(queryParams)
+    const {searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queryProcessing(req)
+    const blogsList = await blogsQueryRepository.getAllBlogs(searchNameTerm, pageNumber, pageSize, sortBy, sortDirection)
     res.send(blogsList)
 })
 
@@ -28,8 +28,8 @@ blogsRouter.get('/:id', async (req:Request, res:Response) => {
 })
 
 blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
-    const queryParams = queryProcessing(req)
-    const posts = await getPostsOfCurrentBlog(queryParams, req.params.id)
+    const {pageNumber, pageSize, sortBy, sortDirection} = queryProcessing(req)
+    const posts = await getPostsOfCurrentBlog(pageNumber, pageSize, sortBy, sortDirection, req.params.id)
     posts ? res.send(posts) : res.send(404)
 })
 

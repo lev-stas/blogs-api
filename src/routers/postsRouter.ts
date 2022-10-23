@@ -9,8 +9,8 @@ import {createPost} from "../domain/postsDomain";
 export const postsRouter = Router()
 
 postsRouter.get('/', async (req: Request, res:Response)=>{
-    const queryParams = queryProcessing(req)
-    const posts = await getAllPosts(queryParams)
+    const {pageNumber, pageSize, sortBy, sortDirection} = queryProcessing(req)
+    const posts = await getAllPosts(pageNumber, pageSize, sortBy, sortDirection)
     res.send(posts)
 })
 
@@ -34,7 +34,7 @@ postsRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Re
 
 postsRouter.post('/', authValidatorMiddleware, postsChangeValidation, async (req: Request, res: Response) => {
     const {title, shortDescription, content, blogId} = req.body
-    const newPost = await createPost(req.body.blogId, req.body.title, req.body.shortDescription, req.body.content)
+    const newPost = await createPost(blogId, title, shortDescription, content)
     res.status(201).send(newPost)
 })
 
