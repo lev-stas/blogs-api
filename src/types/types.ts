@@ -1,9 +1,13 @@
+import {idGenerator} from "../utils/utils";
+
 export type QueryParams = {
-    searchNameTerm?: string,
-    pageNumber?: number,
-    pageSize?: number,
-    sortBy?: string,
-    sortDirection?: -1 | 1
+    searchNameTerm: string,
+    searchLoginTerm: string,
+    searchEmailTerm: string,
+    pageNumber: number,
+    pageSize: number,
+    sortBy: string,
+    sortDirection: -1 | 1
 }
 
 export type BlogsType = {
@@ -28,5 +32,14 @@ export type ResponseType = {
     page: number,
     pageSize: number,
     totalCount: number,
-    items: BlogsType[] | PostType[]
+    items: BlogsType[] | PostType[] | UsersType[]
+}
+
+export type UsersType = {
+    id: string,
+    login: string,
+    email: string,
+    salt: string,
+    passHash?: string,
+    createdAt: string
 }
