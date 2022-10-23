@@ -7,7 +7,7 @@ export function queryProcessing (req: Request){
         searchEmailTerm: '/*',
         searchLoginTerm: '/*',
         pageNumber: 1,
-        pageSize: 1,
+        pageSize: 10,
         sortBy: 'createdAt',
         sortDirection: -1
     }
