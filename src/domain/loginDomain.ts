@@ -1,6 +1,7 @@
 import {usersDomain} from "./usersDomain";
 import {usersRepository} from "../repositories/usersRepository";
 import bcrypt from "bcrypt";
+import {jwtService} from "../utils/jwtService";
 
 export async function checkCreds(login: string, password:string){
     const user = await usersRepository.checkIfUserExists(login)
@@ -8,5 +9,11 @@ export async function checkCreds(login: string, password:string){
         return null
     }
     const hash = await bcrypt.hash(password, user.salt)
-    return hash === user.passHash
+    if (hash !== user.passHash){
+        return null
+    }
+    const token = jwtService.generateToken(user.id)
+    return{
+        accessToken: token
+    }
 }

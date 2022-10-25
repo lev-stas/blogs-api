@@ -33,11 +33,11 @@ usersRouter.get('/', async (req:Request, res:Response) =>{
 })
 
 usersRouter.post('/', authValidatorMiddleware, postUserValidation, async (req:Request, res: Response) => {
-    const user = await usersDomain.createUser(req.body.login, req.body.password, req.body.email)
-    if(!user){
+    const result = await usersDomain.createUser(req.body.login, req.body.password, req.body.email)
+    if(!result){
         res.send(404)
     }
-    res.status(201).send(user)
+    res.status(201).send(result)
 })
 
 usersRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Response)=>{
