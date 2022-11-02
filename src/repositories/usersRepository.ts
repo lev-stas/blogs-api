@@ -2,7 +2,7 @@ import {usersCollection} from "./mongodb";
 import {UsersType} from "../types/types";
 
 export const usersRepository = {
-    async getUserById (id: string){
+    async getUserById (id: string | string [] | undefined){
         const user = await usersCollection.findOne({id: id},{projection:{_id:0, salt:0, passHash:0, createdAt: 0}})
         if (!user){
             return null

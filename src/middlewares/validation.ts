@@ -60,5 +60,10 @@ export const loginValidation = [
     validationMiddleware
 ]
 
+export const commentValidation = [
+    stringValidator('content', 20, 300),
+    validationMiddleware
+]
+
 
 

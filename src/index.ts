@@ -8,6 +8,8 @@ import {testingRoute} from "./routers/testing";
 import {runMongoDB} from "./repositories/mongodb";
 import {usersRouter} from "./routers/usersRouter";
 import {authRouter} from "./routers/authRouter";
+import {commentsRouter} from "./routers/commentsRouter";
+
 
 const app = express();
 const parser = bodyParser();
@@ -25,6 +27,7 @@ app.use('/posts', postsRouter)
 app.use('/testing/all-data', testingRoute)
 app.use('/users', usersRouter)
 app.use('/auth', authRouter)
+app.use('/comments', commentsRouter)
 
 
 const startApp = async () => {

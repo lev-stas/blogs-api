@@ -4,6 +4,7 @@ import {checkCreds} from "../domain/loginDomain";
 import {authValidatorMiddleware} from "../middlewares/authValidationMiddleware";
 import {usersRepository} from "../repositories/usersRepository";
 
+
 export const authRouter = Router()
 
 authRouter.post('/login', loginValidation, async (req:Request, res:Response)=>{
@@ -18,8 +19,8 @@ authRouter.post('/login', loginValidation, async (req:Request, res:Response)=>{
 authRouter.get('/me', authValidatorMiddleware, async (req:Request, res:Response)=>{
     const user =  await  usersRepository.getUserById(req.headers.userId)
     res.send({
-        email: user?.email,
-        login: user?.login,
-        userId: user?.id
+        email: user!.email,
+        login: user!.login,
+        userId: user!.id
     })
 })
