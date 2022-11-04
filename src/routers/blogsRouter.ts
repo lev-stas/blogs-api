@@ -8,6 +8,7 @@ import {blogsQueryRepository} from "../repositories/blogsQueryRepository";
 import {BlogsType} from "../types/types";
 import {getPostsOfCurrentBlog} from "../repositories/postsQueryRepository";
 import {createPost} from "../domain/postsDomain";
+import {basicAuthMiddleware} from "../middlewares/basicAuthMiddleware";
 export const blogsRouter = Router();
 
 
@@ -33,12 +34,12 @@ blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
     posts ? res.send(posts) : res.send(404)
 })
 
-blogsRouter.post('/',authValidatorMiddleware, blogsChangeValidation, async (req: Request, res: Response) => {
+blogsRouter.post('/',basicAuthMiddleware, blogsChangeValidation, async (req: Request, res: Response) => {
     const newBlog : BlogsType | null = await createBlog(req.body.name, req.body.youtubeUrl)
     newBlog ? res.status(201).send(newBlog) : res.status(500).send('Failed to add new blog')
 })
 
-blogsRouter.post('/:id/posts', authValidatorMiddleware, postsInBlogsValidation, async (req: Request, res: Response) =>{
+blogsRouter.post('/:id/posts', basicAuthMiddleware, postsInBlogsValidation, async (req: Request, res: Response) =>{
     const newPost = await createPost(req.params.id, req.body.title, req.body.shortDescription, req.body.content)
     if(!newPost){
         res.send(404)
@@ -47,7 +48,7 @@ blogsRouter.post('/:id/posts', authValidatorMiddleware, postsInBlogsValidation, 
     res.status(201).send(newPost)
 })
 
-blogsRouter.delete('/:id',authValidatorMiddleware, async (req: Request, res:Response) => {
+blogsRouter.delete('/:id',basicAuthMiddleware, async (req: Request, res:Response) => {
     const deletedBlog = await blogsRepository.deleteBlogById(req.params.id)
     if (!deletedBlog){
         res.send(404)
@@ -56,7 +57,7 @@ blogsRouter.delete('/:id',authValidatorMiddleware, async (req: Request, res:Resp
     res.send(204)
 })
 
-blogsRouter.put('/:id',authValidatorMiddleware, blogsChangeValidation, async (req: Request, res: Response) =>{
+blogsRouter.put('/:id',basicAuthMiddleware, blogsChangeValidation, async (req: Request, res: Response) =>{
     const updatedBlog = await blogsRepository.updateBlogById(req.params.id, req.body.name, req.body.youtubeUrl)
     if (!updatedBlog){
         res.send(404)
