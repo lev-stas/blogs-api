@@ -8,6 +8,7 @@ import {createPost} from "../domain/postsDomain";
 import {createComment} from "../domain/commentsDomain";
 import {usersRepository} from "../repositories/usersRepository";
 import {getAllCommentsOfPost} from "../repositories/commentsQueryRepository";
+import {basicAuthMiddleware} from "../middlewares/basicAuthMiddleware";
 
 
 export const postsRouter = Router()
@@ -42,7 +43,7 @@ postsRouter.get ('/:id/comments', async (req: Request, res: Response) => {
     res.send(comments)
 })
 
-postsRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Response) => {
+postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Response) => {
     const deletedPost = await postsRepositories.deletePost(req.params.id)
     if (!deletedPost){
         res.send(404)
@@ -51,7 +52,7 @@ postsRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Re
     res.send(204)
 })
 
-postsRouter.post('/', authValidatorMiddleware, postsChangeValidation, async (req: Request, res: Response) => {
+postsRouter.post('/', basicAuthMiddleware, postsChangeValidation, async (req: Request, res: Response) => {
     const {title, shortDescription, content, blogId} = req.body
     const newPost = await createPost(blogId, title, shortDescription, content)
     res.status(201).send(newPost)
@@ -76,7 +77,7 @@ postsRouter.post ('/:id/comments', authValidatorMiddleware, commentValidation, a
 })
 
 
-postsRouter.put('/:id', authValidatorMiddleware, postsChangeValidation, async (req: Request, res:Response) => {
+postsRouter.put('/:id', basicAuthMiddleware, postsChangeValidation, async (req: Request, res:Response) => {
     const targetPost = await postsRepositories.changePost(
         req.params.id,
         req.body.title,

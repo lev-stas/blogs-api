@@ -5,10 +5,11 @@ import { postUserValidation} from "../middlewares/validation";
 import {getUsers} from "../repositories/usersQueryRepository";
 import {queryProcessing} from "../utils/queryProcessing";
 import {usersRepository} from "../repositories/usersRepository";
+import {basicAuthMiddleware} from "../middlewares/basicAuthMiddleware";
 
 export const usersRouter = Router()
 
-usersRouter.get('/', async (req:Request, res:Response) =>{
+usersRouter.get('/', basicAuthMiddleware, async (req:Request, res:Response) =>{
     const {
         searchLoginTerm,
         searchEmailTerm,
@@ -32,7 +33,7 @@ usersRouter.get('/', async (req:Request, res:Response) =>{
     res.send(users)
 })
 
-usersRouter.post('/', authValidatorMiddleware, postUserValidation, async (req:Request, res: Response) => {
+usersRouter.post('/', basicAuthMiddleware, postUserValidation, async (req:Request, res: Response) => {
     const result = await usersDomain.createUser(req.body.login, req.body.password, req.body.email)
     if(!result){
         res.send(404)
@@ -40,7 +41,7 @@ usersRouter.post('/', authValidatorMiddleware, postUserValidation, async (req:Re
     res.status(201).send(result)
 })
 
-usersRouter.delete('/:id', authValidatorMiddleware, async (req: Request, res: Response)=>{
+usersRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Response)=>{
     const result = await usersRepository.deleteUser(req.params.id)
     if(!result){
         res.send(404)
