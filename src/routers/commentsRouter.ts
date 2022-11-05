@@ -9,6 +9,7 @@ commentsRouter.get('/:id', async (req: Request, res: Response) => {
     const comment = await commentsRepository.getCommentById(req.params.id)
     if (!comment){
         res.send(404)
+        return
     }
     res.send(comment)
 })
