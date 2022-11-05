@@ -65,10 +65,15 @@ postsRouter.post ('/:id/comments', authValidatorMiddleware, commentValidation, a
         return
     }
     const user = await usersRepository.getUserById(req.headers.userId)
+    if (!user) {
+        res.send(404)
+        console.log(user)
+        return
+    }
     const newComment = await createComment(
         currentPost.id,
-        user!.id,
-        user!.login,
+        user.id,
+        user.login,
         req.body.content
     )
     res.status(201).send(newComment)
