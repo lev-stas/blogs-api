@@ -14,11 +14,7 @@ export const validationMiddleware = (req: Request, res: Response, next: NextFunc
             }
             errorMessage.errorsMessages.push(error)
         })
-        if(errorMessage.errorsMessages.find(item => item.message === 'Unauthorized')) {
-            res.send(401)
-        } else {
-            res.status(400).json(errorMessage)
-        }
+        res.status(400).json(errorMessage)
         return;
     }
     next()

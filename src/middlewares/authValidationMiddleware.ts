@@ -6,7 +6,7 @@ export const authValidatorMiddleware = (req: Request, res: Response, next: NextF
         res.send(401)
         return;
     }
-    const token: string = req.headers.authorization.split(' ')[1]
+    const token: string = req.headers.authorization?.split(' ')[1]
     const result = jwtService.verifyToken(token!)
     if (!result){
         res.send(401)

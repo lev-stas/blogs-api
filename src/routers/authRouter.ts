@@ -18,6 +18,7 @@ authRouter.post('/login', loginValidation, async (req:Request, res:Response)=>{
 
 authRouter.get('/me', authValidatorMiddleware, async (req:Request, res:Response)=>{
     const user =  await  usersRepository.getUserById(req.headers.userId)
+    console.log(user!.email)
     res.send({
         email: user!.email,
         login: user!.login,
