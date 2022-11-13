@@ -65,5 +65,11 @@ export const commentValidation = [
     validationMiddleware
 ]
 
+export const registrationValidation = [
+    stringValidator('login', 3, 10),
+    stringValidator('password', 6, 20),
+    emailValidator,
+    validationMiddleware
+]
 
 
