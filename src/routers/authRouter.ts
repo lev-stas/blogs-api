@@ -34,20 +34,20 @@ authRouter.get('/me', authValidatorMiddleware, async (req:Request, res:Response)
 authRouter.post('/registration', registrationValidation, async (req: Request, res: Response) => {
     const user = await usersDomain.createUser(req.body.login, req.body.password, req.body.email)
     if (!user){
-        res.send(404)
+        res.sendStatus(404)
         return
     }
     res.status(204).send('Confirmation code is resent. Please, check you email')
 })
 
 authRouter.post ('/registration-confirmation', confirmationValidation, async (req: Request, res: Response) => {
-    res.send(204).send('Your account has been confirmed')
+    res.status(204).send('Your account has been confirmed')
 })
 
 authRouter.post ('/registration-email-resending', resendingValidation, async (req: Request, res: Response) => {
     const resentMessage = usersDomain.resendUserConfirmationCode(req.body.email)
     if (!resentMessage){
-        res.send(503)
+        res.sendStatus(503)
     }
     res.status(204).send('Confirmation code is resent. Please, check you email')
 })
