@@ -33,13 +33,22 @@ const isConfirmedUser: CustomValidator = async (value) => {
     return true
 }
 
-const isUserExists: CustomValidator = async (value) => {
+const isUserExistsWithMail: CustomValidator = async (value) => {
     const user = await usersRepository.checkUsersConfirmationByEmail(value)
     if (user){
         throw new Error ('User with such email exists')
     }
     return true
 }
+
+const isUserExistsWithLogin: CustomValidator = async (value) => {
+    const user = await usersRepository.checkIfUserExists(value)
+    if (user){
+        throw new Error ('User with such email exists')
+    }
+    return true
+}
+
 
 const urlValidator = body('youtubeUrl').isURL().matches('^https://([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$', 'g');
 const blogIdValidator = body('blogId').isString().custom(isValidBlogId)
@@ -95,7 +104,8 @@ export const registrationValidation = [
     stringValidator('login', 3, 10),
     stringValidator('password', 6, 20),
     emailValidator,
-    body('email').custom(isUserExists),
+    body('email').custom(isUserExistsWithMail),
+    body('login').custom(isUserExistsWithLogin),
     validationMiddleware
 ]
 
