@@ -1,4 +1,4 @@
-import {idGenerator} from "../utils/utils";
+
 
 export type QueryParams = {
     searchNameTerm: string,
@@ -41,7 +41,12 @@ export type UsersType = {
     email: string,
     salt: string,
     passHash?: string,
-    createdAt: string
+    createdAt: string,
+    isConfirmed: boolean,
+    emailConfirmation: {
+        confirmationCode: string,
+        expirationDate: Date
+    }
 }
 
 export type CommentsType = {

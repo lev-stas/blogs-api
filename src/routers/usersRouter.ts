@@ -37,6 +37,7 @@ usersRouter.post('/', basicAuthMiddleware, postUserValidation, async (req:Reques
     const result = await usersDomain.createUser(req.body.login, req.body.password, req.body.email)
     if(!result){
         res.send(404)
+        return
     }
     res.status(201).send(result)
 })
