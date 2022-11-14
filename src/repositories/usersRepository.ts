@@ -48,5 +48,53 @@ export const usersRepository = {
     async deleteAllUsers(){
         const result = await usersCollection.deleteMany({})
         return result.deletedCount > 0
+    },
+
+    async getUserByConfirmationCode (confirmationCode: string){
+        const user = await usersCollection.findOne({"emailConfirmation.confirmationCode": confirmationCode},{
+                projection: {
+                    _id: 0,
+                    id: 1,
+                    isConfirmed: 1,
+                    emailConfirmation: 1
+                }
+            })
+        if (!user){
+            return null
+        }
+        return user
+    },
+
+    async checkUsersConfirmationByEmail(email: string){
+        const user  = await usersCollection.findOne(
+            {email: email},
+            {projection:{
+                _id: 0,
+                    id: 1,
+                    isConfirmed: 1,
+                }}
+            )
+        if (!user || user.isConfirmed){
+            return null
+        }
+        return true
+    },
+
+    async activateUser (id: string){
+        const result = await usersCollection.updateOne({id: id}, {$set:{isConfirmed: true}})
+        return result.matchedCount === 1
+    },
+
+    async updateExpCode (email: string, code: string, date: Date){
+        const result = await usersCollection.updateOne({email: email}, {
+            $set: {
+                'emailConfirmation.confirmationCode': code,
+                'emailConfirmation.expirationDate': date
+            }
+        })
+        if (!result){
+            return null
+        }
+        return result.matchedCount === 1
     }
 }

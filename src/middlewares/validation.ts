@@ -1,6 +1,8 @@
-import {body, CustomValidator, param} from "express-validator";
+import {body, CustomValidator} from "express-validator";
 import {validationMiddleware} from "./validationMiddleware";
-import {blogsRepository, BlogsType} from "../repositories/blogsRepository";
+import {blogsRepository} from "../repositories/blogsRepository";
+import {usersDomain} from "../domain/usersDomain";
+import {usersRepository} from "../repositories/usersRepository";
 
 
 function stringValidator(field: string,minLength:number, maxLength: number) {
@@ -11,6 +13,22 @@ const isValidBlogId: CustomValidator = async (value) => {
     const currentBlog = await blogsRepository.getBlogById(value)
     if (!currentBlog) {
         throw new Error ('blog is not found')
+    }
+    return true
+}
+
+const isValidConfirmationCode: CustomValidator = async (value) => {
+    const confirmation = await usersDomain.activateUser(value)
+    if (!confirmation){
+        throw new Error ('Confirmation is failed')
+    }
+    return true
+}
+
+const isConfirmedUser: CustomValidator = async (value) => {
+    const confirmation = await usersRepository.checkUsersConfirmationByEmail(value)
+    if (!confirmation){
+        throw new Error ('Can not resend message')
     }
     return true
 }
@@ -69,6 +87,17 @@ export const registrationValidation = [
     stringValidator('login', 3, 10),
     stringValidator('password', 6, 20),
     emailValidator,
+    validationMiddleware
+]
+
+export const confirmationValidation = [
+    body('code').custom(isValidConfirmationCode),
+    validationMiddleware
+]
+
+export const resendingValidation = [
+    emailValidator,
+    body('email').custom(isConfirmedUser),
     validationMiddleware
 ]
 
