@@ -9,10 +9,6 @@ export const usersRepository = {
                 login: 1,
                 email: 1,
                 createdAt: 1
-                // salt:0,
-                // passHash:0,
-                // isConfirmed: 0,
-                // emailConfirmation:0
             }})
         if (!user){
             return null
