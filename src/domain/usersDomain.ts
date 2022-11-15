@@ -37,7 +37,7 @@ export const usersDomain = {
             newUser.email,
             ' Repeat Registration Confirmation',
             `<h1>To confirm registration, please, press the link below </h1>
-               <a href='https://https://incubator-blogs-api.herokuapp.com/auth/registration-confirmation?${usersConfirmationInfo?.emailConfirmation.confirmationCode}'>Confirm registration</a>`
+               <a href='https://https://incubator-blogs-api.herokuapp.com/auth/registration-confirmation?code=${usersConfirmationInfo?.emailConfirmation.confirmationCode}'>Confirm registration</a>`
         )
         if (!sentMessage){
             return null
@@ -76,7 +76,7 @@ export const usersDomain = {
         const sentMessage = await sendEmail(
             email,
             'Registration Confirmation',
-            `<a href='https://https://incubator-blogs-api.herokuapp.com/auth/registration-confirmation?${newCode}'>Confirm registration</a>`
+            `<a href='https://https://incubator-blogs-api.herokuapp.com/auth/registration-confirmation?code=${newCode}'>Confirm registration</a>`
         )
         if (!sentMessage){
             return null
