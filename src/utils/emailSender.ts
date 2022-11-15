@@ -6,7 +6,9 @@ dotenv.config()
 
 const gmailAccount = process.env.GMAIL_ACCOUNT
 const gmailTransport = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.mail.ru',
+    port: 465,
+    secure:true,
     auth: {
         user: gmailAccount,
         pass: process.env.GMAIL_SECRET
@@ -15,7 +17,7 @@ const gmailTransport = nodemailer.createTransport({
 
 export async function sendEmail (recipient: string, subject: string, body: string){
     const info = await gmailTransport.sendMail({
-        from: `Stas from IT Incubator <${gmailAccount}>`,
+        from: `IT Incubator <${gmailAccount}>`,
         to: recipient,
         subject: subject,
         html: body
