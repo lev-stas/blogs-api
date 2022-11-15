@@ -37,11 +37,11 @@ authRouter.post('/registration', registrationValidation, async (req: Request, re
         res.sendStatus(404)
         return
     }
-    res.status(204).send('Confirmation code is resent. Please, check you email')
+    res.sendStatus(204)
 })
 
 authRouter.post ('/registration-confirmation', confirmationValidation, async (req: Request, res: Response) => {
-    res.status(204).send('Your account has been confirmed')
+    res.sendStatus(204)
 })
 
 authRouter.post ('/registration-email-resending', resendingValidation, async (req: Request, res: Response) => {
@@ -49,5 +49,5 @@ authRouter.post ('/registration-email-resending', resendingValidation, async (re
     if (!resentMessage){
         res.sendStatus(503)
     }
-    res.status(204).send('Confirmation code is resent. Please, check you email')
+    res.sendStatus(204)
 })
