@@ -9,13 +9,17 @@ import {runMongoDB} from "./repositories/mongodb";
 import {usersRouter} from "./routers/usersRouter";
 import {authRouter} from "./routers/authRouter";
 import {commentsRouter} from "./routers/commentsRouter";
+import cookieParser from "cookie-parser";
+
 
 const app = express();
 const parser = bodyParser();
+const cookiesParser = cookieParser();
 const port = process.env.PORT;
 const welcomeMessage:string = 'It Would Be Great to Get a Welcome Drink Here!';
 
 app.use(parser)
+app.use(cookiesParser)
 
 app.get ('/', (req:Request, res:Response) => {
     res.send(welcomeMessage)

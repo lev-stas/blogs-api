@@ -47,6 +47,10 @@ export type UsersType = {
         confirmationCode: string,
         expirationDate: Date
     }
+    refreshTokens: {
+        token?: string,
+        isValid?: boolean
+    }
 }
 
 export type CommentsType = {

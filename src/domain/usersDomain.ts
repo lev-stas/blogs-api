@@ -23,7 +23,8 @@ export const usersDomain = {
                 expirationDate: add(new Date(), {
                     minutes:5
                 })
-            }
+            },
+            refreshTokens: {}
         }
         const result = await usersRepository.addNewUser(newUser)
         if (!result){
@@ -47,8 +48,6 @@ export const usersDomain = {
     },
     async _generateHash (password: string, salt: any) {
         const hash = await bcrypt.hash(password, salt)
-        console.log("hash is "+hash)
-        console.log('Type of hash is ' + typeof(hash))
         return hash
     },
 
@@ -83,5 +82,4 @@ export const usersDomain = {
         }
         return sentMessage
     },
-
 }

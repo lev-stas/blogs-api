@@ -90,7 +90,7 @@ export const postUserValidation = [
 ]
 
 export const loginValidation = [
-    body('login').isString().trim(),
+    body('loginOrEmail').isString().trim(),
     body('password').isString().trim(),
     validationMiddleware
 ]

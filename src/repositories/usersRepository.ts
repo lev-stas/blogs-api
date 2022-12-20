@@ -26,8 +26,15 @@ export const usersRepository = {
         return confirmationInfo
     },
 
-    async checkIfUserExists (login: string){
-        const user = await usersCollection.findOne({login: login},{projection:{_id:0, id:1, salt:1, passHash:1}})
+    async checkIfUserExists (loginOrEmail: string){
+        const user = await usersCollection.findOne({
+        $or:
+            [
+                {login: loginOrEmail},
+                {email: loginOrEmail}
+            ]
+
+    },{projection:{_id:0, id:1, salt:1, passHash:1}})
         if (!user){
             return null
         }
@@ -91,6 +98,40 @@ export const usersRepository = {
         if (!result){
             return null
         }
+        return result.matchedCount === 1
+    },
+    async setRefreshToken (userId: string | string [] | undefined, token: string){
+        const result = await usersCollection.updateOne({id: userId}, {
+            $set:{
+                'refreshTokens.token': token,
+                'refreshTokens.isValid': true
+            }
+        })
+        if (!result){
+            return null
+        }
+        return result.matchedCount === 1
+    },
+    async checkRefreshToken(token: string){
+        const result = await usersCollection.findOne(
+            {
+            'refreshTokens.token': token
+            },
+            {
+                projection:{
+                    _id: 0,
+                    "refreshTokens.isValid": 1
+                }
+            }
+            )
+        return result?.refreshTokens.isValid
+    },
+    async disableRefreshToken (token: string){
+        const result = await usersCollection.updateOne({'refreshTokens.token': token},{
+            $set: {
+                'refreshTokens.isValid': false
+            }
+        } )
         return result.matchedCount === 1
     }
 }
