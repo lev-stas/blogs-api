@@ -1,11 +1,5 @@
 import {blogsCollection, mongoClient} from "./mongodb";
-
-export type BlogsType ={
-    id: string,
-    name: string,
-    youtubeUrl: string,
-    createdAt: string
-}
+import {BlogsType} from "../types/types";
 
 
 export const blogsRepository = {
@@ -27,10 +21,10 @@ export const blogsRepository = {
         const result = await blogsCollection.deleteOne({id:id})
         return result.deletedCount === 1
     },
-    async updateBlogById(id: string, name: string, youtubeUrl: string): Promise<boolean>{
+    async updateBlogById(id: string, name: string, websiteUrl: string): Promise<boolean>{
         const result = await blogsCollection.updateOne({id:id},{$set:{
                 name: name,
-                youtubeUrl: youtubeUrl
+                websiteUrl: websiteUrl
             }})
         return result.matchedCount === 1
 

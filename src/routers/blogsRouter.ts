@@ -35,7 +35,7 @@ blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
 })
 
 blogsRouter.post('/',basicAuthMiddleware, blogsChangeValidation, async (req: Request, res: Response) => {
-    const newBlog : BlogsType | null = await createBlog(req.body.name, req.body.youtubeUrl)
+    const newBlog : BlogsType | null = await createBlog(req.body.name, req.body.websiteUrl)
     newBlog ? res.status(201).send(newBlog) : res.status(500).send('Failed to add new blog')
 })
 
@@ -58,7 +58,7 @@ blogsRouter.delete('/:id',basicAuthMiddleware, async (req: Request, res:Response
 })
 
 blogsRouter.put('/:id',basicAuthMiddleware, blogsChangeValidation, async (req: Request, res: Response) =>{
-    const updatedBlog = await blogsRepository.updateBlogById(req.params.id, req.body.name, req.body.youtubeUrl)
+    const updatedBlog = await blogsRepository.updateBlogById(req.params.id, req.body.name, req.body.websiteUrl)
     if (!updatedBlog){
         res.send(404)
         return
