@@ -13,7 +13,7 @@ export type QueryParams = {
 export type BlogsType = {
     id: string,
     name: string,
-    youtubeUrl: string,
+    websiteUrl: string,
     createdAt: string
 }
 

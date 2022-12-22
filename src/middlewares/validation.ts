@@ -50,7 +50,7 @@ const isUserExistsWithLogin: CustomValidator = async (value) => {
 }
 
 
-const urlValidator = body('youtubeUrl').isURL().matches('^https://([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$', 'g');
+const urlValidator = body('websiteUrl').isURL().matches('^https://([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$', 'g');
 const blogIdValidator = body('blogId').isString().custom(isValidBlogId)
 const emailValidator = body('email').isEmail().trim()
 
