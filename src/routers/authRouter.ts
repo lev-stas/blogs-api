@@ -22,7 +22,8 @@ authRouter.post('/login', loginValidation, async (req:Request, res:Response)=>{
         refreshToken: result.refreshToken
     }
     res.cookie('refreshToken', result.refreshToken,{
-        httpOnly: true
+        httpOnly: true,
+        secure: true
     })
     res.send({accessToken: result.accessToken})
 })
@@ -63,7 +64,8 @@ authRouter.post ('/refresh-token',refreshTokenValidatorMiddleware, async (req: R
         res.sendStatus(503)
     }
     res.cookie('refreshToken', tokens?.refreshToken, {
-        httpOnly: true
+        httpOnly: true,
+        secure: true
     })
     res.send({accessToken: tokens?.accessToken})
 })
