@@ -11,6 +11,7 @@ import {authRouter} from "./routers/authRouter";
 import {commentsRouter} from "./routers/commentsRouter";
 import cookieParser from "cookie-parser";
 
+const cors = require('cors')
 
 const app = express();
 const parser = bodyParser();
@@ -18,6 +19,10 @@ const cookiesParser = cookieParser();
 const port = process.env.PORT;
 const welcomeMessage:string = 'It Would Be Great to Get a Welcome Drink Here!';
 
+
+app.use(cors({
+    origin: ["http://localhost:3000", "https://localhost:3000" ]
+}))
 app.use(parser)
 app.use(cookiesParser)
 
