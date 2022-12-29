@@ -20,7 +20,8 @@ const welcomeMessage:string = 'It Would Be Great to Get a Welcome Drink Here!';
 
 
 app.use(cors({
-    origin:"*"
+    origin:"http://localhost:3000/*",
+    credentials: true
 }))
 app.use(parser)
 app.use(cookiesParser)
