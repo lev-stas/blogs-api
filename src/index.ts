@@ -20,9 +20,7 @@ const port = process.env.PORT;
 const welcomeMessage:string = 'It Would Be Great to Get a Welcome Drink Here!';
 
 
-app.use(cors({
-    origin: ["http://localhost:3000/*", "https://localhost:3000/*" ]
-}))
+app.use(cors())
 app.use(parser)
 app.use(cookiesParser)
 
