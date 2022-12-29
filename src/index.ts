@@ -10,7 +10,6 @@ import {usersRouter} from "./routers/usersRouter";
 import {authRouter} from "./routers/authRouter";
 import {commentsRouter} from "./routers/commentsRouter";
 import cookieParser from "cookie-parser";
-
 const cors = require('cors')
 
 const app = express();
